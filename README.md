@@ -1,45 +1,46 @@
-# OhkanGame (Rust)
+# OhkanGame (Rust版)
 
-A faithful Rust port of the original **OhkanGame** — a Flash/ActionScript 3 game developed in 2013.
+2013年に制作された Flash/ActionScript 3 ゲーム「OhkanGame」の **Rust完全移植版**。
 
-![Screenshot](docs/screenshot.png)
+![スクリーンショット](docs/screenshot.png)
 
-## Overview
+## 概要
 
-The original game was built with Adobe Flash (ActionScript 3) and published around 2013.  
-This version reimplements it entirely in **Rust** using the [macroquad](https://github.com/not-fl3/macroquad) game framework, preserving the original gameplay, collision logic, and sprite behavior as accurately as possible.
+オリジナルは Adobe Flash（ActionScript 3）で開発・公開されたゲーム。  
+本リポジトリはそれを **Rust** + [macroquad](https://github.com/not-fl3/macroquad) フレームワークで完全に作り直したもの。  
+衝突判定・攻撃者アニメーション・スプライト挙動はAS3原典に準拠。
 
-## Gameplay
+## ゲームルール
 
-- Move the character left/right to catch falling crowns on your head
-- Stack 10 crowns to win
-- Avoid the giant Kokeshi and the Statue of Liberty sweeping your crown stack
-- 3 lives — small Kokeshi hits cost a life
-- 90-second time limit
+- キャラクターを左右に動かして、落下する王冠を頭に乗せる
+- 王冠を10個スタックするとゲームクリア
+- 巨大こけし・自由の女神がスタック王冠を破壊しにくる
+- 小こけしに当たるとライフ減少（3回でゲームオーバー）
+- 制限時間90秒
 
-## Controls
+## 操作方法
 
-| Input | Action |
-|-------|--------|
-| ← / A | Move left |
-| → / D | Move right |
-| On-screen buttons | Move left / right (touch/mouse) |
-| Space / Enter | Start game (title screen) |
+| 入力 | 動作 |
+|------|------|
+| ← / A | 左移動 |
+| → / D | 右移動 |
+| 画面下のボタン | 左右移動（マウス・タッチ） |
+| Space / Enter | ゲーム開始（タイトル画面） |
 
-## Tech Stack
+## 技術スタック
 
-- **Language**: Rust (100%)
-- **Framework**: [macroquad](https://github.com/not-fl3/macroquad) 0.4
-- **Platform**: macOS (arm64 / x86_64)
-- **Build**: Cargo
+- **言語**: Rust（100%）
+- **フレームワーク**: [macroquad](https://github.com/not-fl3/macroquad) 0.4
+- **対応プラットフォーム**: macOS（arm64 / x86_64）
+- **ビルドツール**: Cargo
 
-## Build
+## ビルド方法
 
 ```bash
 cargo run
 ```
 
-### macOS .app bundle (arm64)
+### macOS .appバンドル（arm64）ビルド
 
 ```bash
 SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
@@ -52,7 +53,7 @@ cp target/aarch64-apple-darwin/release/RustOhkanGame RustOhkanGame.app/Contents/
 touch RustOhkanGame.app
 ```
 
-## Original
+## オリジナル
 
-- Original Flash game: [TobiSyazaiFlash](https://github.com/tobisako/TobiSyazaiFlash)
-- Original language: ActionScript 3 (Adobe Flash)
+- 元リポジトリ: [TobiSyazaiFlash](https://github.com/tobisako/TobiSyazaiFlash)
+- 元言語: ActionScript 3（Adobe Flash）
