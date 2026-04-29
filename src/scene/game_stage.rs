@@ -187,6 +187,15 @@ impl Scene for GameStageScene {
         }
         self.mounted_count = self.crowns.iter().filter(|c| c.mode == 1).count();
 
+        // Re-compact mount_index after ejections to close visual gaps in the stack
+        let mut idx = 0usize;
+        for c in self.crowns.iter_mut() {
+            if c.mode == 1 {
+                c.mount_index = idx;
+                idx += 1;
+            }
+        }
+
         for _ in 0..damage_events { self.take_damage(); }
 
         self.crowns.retain(|c| c.alive);
