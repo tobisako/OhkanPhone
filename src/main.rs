@@ -3,6 +3,7 @@ use macroquad::prelude::*;
 mod game;
 mod resources;
 mod scene;
+mod viewport;
 
 pub use resources::Resources;
 pub const SCREEN_W: f32 = 600.0;
@@ -19,6 +20,7 @@ fn window_conf() -> Conf {
         window_width: 600,
         window_height: 1200,
         window_resizable: false,
+        high_dpi: true,
         ..Default::default()
     }
 }
@@ -26,6 +28,7 @@ fn window_conf() -> Conf {
 #[macroquad::main(window_conf)]
 async fn main() {
     // When launched as .app bundle, CWD is "/" — set it to the binary's directory so assets/ is found
+    #[cfg(not(target_arch = "wasm32"))]
     if !std::path::Path::new("assets").exists() {
         if let Ok(exe) = std::env::current_exe() {
             if let Some(dir) = exe.parent() {
@@ -34,6 +37,8 @@ async fn main() {
         }
     }
 
+    macroquad::rand::srand(macroquad::miniquad::date::now() as u64);
+
     use scene::{Scene, SceneResult};
 
     let res = Resources::load().await;
@@ -41,6 +46,7 @@ async fn main() {
 
     loop {
         clear_background(BLACK);
+        viewport::apply_camera();
         if let Some(next) = active.update_draw(&res) {
             active.on_exit(&res);
             active = match next {

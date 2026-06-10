@@ -59,13 +59,22 @@ impl Resources {
             t.set_filter(FilterMode::Linear);
         }
 
-        let snd_title     = load_sound("assets/se/se_setsumei.wav").await.unwrap();
-        let snd_bgm       = load_sound("assets/se/se_gamebgm.wav").await.unwrap();
-        let snd_catch     = load_sound("assets/se/se_catch.wav").await.unwrap();
+        // Web build uses mp3 (17MB BGM wav → 1.5MB; iOS Safari can't decode ogg).
+        // Native keeps wav: quad-snd's native backend has no mp3 decoder.
+        #[cfg(target_arch = "wasm32")]
+        const SE_EXT: &str = "mp3";
+        #[cfg(not(target_arch = "wasm32"))]
+        const SE_EXT: &str = "wav";
+        let se = |name: &str| format!("assets/se/{name}.{SE_EXT}");
+
+        let snd_title     = load_sound(&se("se_setsumei")).await.unwrap();
+        let snd_bgm       = load_sound(&se("se_gamebgm")).await.unwrap();
+        let snd_catch     = load_sound(&se("se_catch")).await.unwrap();
+        // crown_hit has no mp3 source — wav is small (654KB), used on all platforms
         let snd_crown_hit = load_sound("assets/se/se_crown_hit.wav").await.unwrap();
-        let snd_damage    = load_sound("assets/se/se_damage.wav").await.unwrap();
-        let snd_clear     = load_sound("assets/se/se_gameclear.wav").await.unwrap();
-        let snd_beamgun   = load_sound("assets/se/se_beamgun.wav").await.unwrap();
+        let snd_damage    = load_sound(&se("se_damage")).await.unwrap();
+        let snd_clear     = load_sound(&se("se_gameclear")).await.unwrap();
+        let snd_beamgun   = load_sound(&se("se_beamgun")).await.unwrap();
 
         Self {
             tex_abe, tex_ohkan, tex_kokeshi, tex_megami, tex_big_kokeshi,

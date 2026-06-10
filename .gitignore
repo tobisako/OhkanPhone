@@ -2,3 +2,5 @@
 .DS_Store
 .cargo/
 RustOhkanGame.app/
+.gstack/
+dist/

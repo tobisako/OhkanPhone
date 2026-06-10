@@ -50,9 +50,9 @@ impl Scene for TitleScene {
         let sw = measure_text(&s, None, 20, 1.0).width;
         draw_text(&s, SCREEN_W / 2.0 - sw / 2.0, SCREEN_H * 0.88, 20.0, Color::from_rgba(200, 200, 200, 200));
 
-        let (mx, my) = mouse_position();
         let btn = Rect::new(bx, by, bw, bh);
-        if (is_mouse_button_pressed(MouseButton::Left) && btn.contains(Vec2::new(mx, my)))
+        let tapped = crate::viewport::tap_world().is_some_and(|p| btn.contains(p));
+        if tapped
             || is_key_pressed(KeyCode::Space)
             || is_key_pressed(KeyCode::Enter)
             || self.timer <= 0.0

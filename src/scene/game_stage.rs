@@ -90,13 +90,18 @@ impl Scene for GameStageScene {
         self.player.moving_left  = is_key_down(KeyCode::Left)  || is_key_down(KeyCode::A);
         self.player.moving_right = is_key_down(KeyCode::Right) || is_key_down(KeyCode::D);
 
-        let (mx, my) = mouse_position();
         let btn_y = PLAY_Y + PLAY_H + 50.0;
         let left_btn  = Rect::new(20.0,             btn_y, 140.0, 110.0);
         let right_btn = Rect::new(SCREEN_W - 160.0, btn_y, 140.0, 110.0);
         if is_mouse_button_down(MouseButton::Left) {
-            if left_btn.contains(Vec2::new(mx, my))  { self.player.moving_left  = true; }
-            if right_btn.contains(Vec2::new(mx, my)) { self.player.moving_right = true; }
+            let p = crate::viewport::pointer_world();
+            if left_btn.contains(p)  { self.player.moving_left  = true; }
+            if right_btn.contains(p) { self.player.moving_right = true; }
+        }
+        // Multi-touch: each finger checked separately, so both buttons can be held
+        for p in crate::viewport::touches_world() {
+            if left_btn.contains(p)  { self.player.moving_left  = true; }
+            if right_btn.contains(p) { self.player.moving_right = true; }
         }
 
         // --- UPDATE ---

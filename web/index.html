@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>OhkanGame — スマホ版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="icon" href="data:image/x-icon;base64,AAABAAEAAQEAAAEAIAAwAAAAFgAAACgAAAABAAAAAgAAAAEAIAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAD/pQAA">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    height: 100dvh; /* Android/iOSのアドレスバー伸縮に追従 */
+    overflow: hidden;
+    background: #000;
+  }
+  canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    touch-action: none;          /* ブラウザのスクロール/ズームジェスチャを無効化 */
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+</style>
+</head>
+<body>
+<canvas id="glcanvas" tabindex="1"></canvas>
+<script src="mq_js_bundle.js"></script>
+<script>load("RustOhkanGame.wasm");</script>
+</body>
+</html>
