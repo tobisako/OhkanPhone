@@ -1,4 +1,36 @@
-# RustOhkanGame
+# OhkanPhone (RustOhkanGame スマホ版)
+
+## スマホ版ビルド
+
+### Web (WASM) 版
+```bash
+./build_web.sh   # wasm32ビルド + dist/ に配信一式を組み立て
+python3 -m http.server 8765 --directory dist   # ローカル確認
+```
+- アセットパスは `set_pc_assets_folder("assets")` 前提で `img/...` `se/...` と書く（`assets/` プレフィックス禁止 — Android AssetManagerはassetsフォルダ自体がルート）
+- Web版音声はmp3（iOS Safariはogg不可）、ネイティブはwav（quad-sndネイティブにmp3デコーダなし）
+- `Camera2D.viewport` はglViewport直渡し=物理px。`screen_width()`/`mouse_position()`は論理px。`touches()`だけ物理px格納 — viewport.rs参照
+
+### Android APK 版
+```bash
+export ANDROID_HOME=~/Library/Android/sdk
+export NDK_HOME=~/Library/Android/sdk/ndk/28.2.13676358
+export RUSTFLAGS="-L $NDK_HOME/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/19/lib/linux/aarch64"   # libunwind用
+export JAVA_HOME=~/dev/jdk8/jdk8u492-b09/Contents/Home   # quad-apkはrt.jar必須=JDK8
+export PATH="$JAVA_HOME/bin:$PATH"
+cargo quad-apk build --release
+# 出力: target/android-artifacts/release/apk/RustOhkanGame.apk
+adb install -r target/android-artifacts/release/apk/RustOhkanGame.apk
+adb shell am start -n com.tobisako.RustOhkanGame/.MainActivity
+```
+
+#### APKビルドの前提（このMacに設定済み）
+- `Cargo.lock` は **version = 3 を維持**（quad-apk内蔵の旧cargoがv4を読めない。cargoが4に書き換えたら3に戻す）
+- NDK 28に旧binutils名のシンボリックリンク作成済み（`aarch64-linux-android-{ar,ld,readelf,strip,objcopy,objdump,nm}` → llvm-*）
+- `build-tools/36.0.0/dx` = d8変換シム設置済み（dx廃止対応、シム内でJDK17使用）
+- `package_name` の末尾セグメントは **クレート名と完全一致必須**（quad-apkがloadLibrary名に使う）
+- `sample_count: 0`（Android時）— エミュレーターにMSAA EGL configが無くpanicするため
+- エミュレーターは `-gpu swiftshader_indirect` で起動（`-gpu host` はApple SiliconでWebGL/GLES壊れる）
 
 ## .appビルド後の必須手順
 

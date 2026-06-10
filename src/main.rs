@@ -21,6 +21,10 @@ fn window_conf() -> Conf {
         window_height: 1200,
         window_resizable: false,
         high_dpi: true,
+        // Android emulators (swiftshader) expose no multisample EGL configs;
+        // EGL_SAMPLES>=1 then matches nothing and miniquad panics (egl.rs cfg_count>0).
+        // 2D sprites don't need MSAA anyway.
+        sample_count: if cfg!(target_os = "android") { 0 } else { 1 },
         ..Default::default()
     }
 }
@@ -36,6 +40,10 @@ async fn main() {
             }
         }
     }
+
+    // Resource paths are written WITHOUT the assets/ prefix: Android's AssetManager
+    // roots at the assets dir itself; desktop/wasm get the prefix from here.
+    set_pc_assets_folder("assets");
 
     macroquad::rand::srand(macroquad::miniquad::date::now() as u64);
 

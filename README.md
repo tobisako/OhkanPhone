@@ -1,6 +1,8 @@
-# OhkanGame (Rust版)
+# OhkanPhone — OhkanGame スマホ版 (Rust)
 
-2013年に制作された Flash/ActionScript 3 ゲーム「OhkanGame」の **Rust完全移植版**。
+2013年制作の Flash ゲーム「OhkanGame」Rust移植版（[RustOhkanGame](https://github.com/tobisako/RustOhkanGame)）を **スマートフォン対応** にしたもの。
+
+**▶ ブラウザでプレイ: https://tobisako.github.io/OhkanPhone/** （スマホ/タブレット/PC対応）
 
 ![スクリーンショット](docs/screenshot.png)
 
@@ -9,6 +11,11 @@
 オリジナルは Adobe Flash（ActionScript 3）で開発・公開されたゲーム。  
 本リポジトリはそれを **Rust** + [macroquad](https://github.com/not-fl3/macroquad) フレームワークで完全に作り直したもの。  
 衝突判定・攻撃者アニメーション・スプライト挙動はAS3原典に準拠。
+
+### スマホ対応の内容
+- **WASM版**: モバイルブラウザで動作（GitHub Pages配信、タッチ操作・レターボックス表示・mp3音声）
+- **Android APK版**: ネイティブアプリ（`cargo quad-apk build --release`、ビルド手順はCLAUDE.md参照）
+- マルチタッチ対応（左右ボタン同時押し可）、任意の画面サイズ・DPIに自動スケール
 
 ## ゲームルール
 
@@ -31,8 +38,8 @@
 
 - **言語**: Rust（100%）
 - **フレームワーク**: [macroquad](https://github.com/not-fl3/macroquad) 0.4
-- **対応プラットフォーム**: macOS（arm64 / x86_64）
-- **ビルドツール**: Cargo
+- **対応プラットフォーム**: Webブラウザ（WASM / スマホ・タブレット・PC）、Android（APK）、macOS（arm64 / x86_64）
+- **ビルドツール**: Cargo / cargo-quad-apk
 
 ## ビルド方法
 

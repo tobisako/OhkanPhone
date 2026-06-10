@@ -34,23 +34,23 @@ pub struct Resources {
 
 impl Resources {
     pub async fn load() -> Self {
-        let tex_abe          = load_texture("assets/img/g_abe.png").await.unwrap();
-        let tex_ohkan        = load_texture("assets/img/g_ohkan.png").await.unwrap();
-        let tex_kokeshi      = load_texture("assets/img/g_kokeshi.png").await.unwrap();
-        let tex_megami       = load_texture("assets/img/g_megami.png").await.unwrap();
-        let tex_big_kokeshi  = load_texture("assets/img/g_big_kokeshi.png").await.unwrap();
-        let tex_bg_title     = load_texture("assets/img/bg_gametitle.png").await.unwrap();
-        let tex_bg_game      = load_texture("assets/img/bg_gamebase.png").await.unwrap();
-        let tex_bg_clear     = load_texture("assets/img/bg_gameclear.png").await.unwrap();
-        let tex_bg_gameback  = load_texture("assets/img/bg_gameback.png").await.unwrap();
-        let tex_bg_gameover  = load_texture("assets/img/bg_haikei.png").await.unwrap();
-        let tex_gameover_msg = load_texture("assets/img/gameover_mouhitoiki.png").await.unwrap();
-        let tex_life_ok      = load_texture("assets/img/g_lifemark.png").await.unwrap();
-        let tex_life_ng      = load_texture("assets/img/g_life_batsu.png").await.unwrap();
-        let tex_btn_left     = load_texture("assets/img/btn_left.png").await.unwrap();
-        let tex_btn_right    = load_texture("assets/img/btn_right.png").await.unwrap();
-        let tex_btn_start    = load_texture("assets/img/btn_gamestart.png").await.unwrap();
-        let tex_btn_back     = load_texture("assets/img/btn_back.png").await.unwrap();
+        let tex_abe          = load_texture("img/g_abe.png").await.unwrap();
+        let tex_ohkan        = load_texture("img/g_ohkan.png").await.unwrap();
+        let tex_kokeshi      = load_texture("img/g_kokeshi.png").await.unwrap();
+        let tex_megami       = load_texture("img/g_megami.png").await.unwrap();
+        let tex_big_kokeshi  = load_texture("img/g_big_kokeshi.png").await.unwrap();
+        let tex_bg_title     = load_texture("img/bg_gametitle.png").await.unwrap();
+        let tex_bg_game      = load_texture("img/bg_gamebase.png").await.unwrap();
+        let tex_bg_clear     = load_texture("img/bg_gameclear.png").await.unwrap();
+        let tex_bg_gameback  = load_texture("img/bg_gameback.png").await.unwrap();
+        let tex_bg_gameover  = load_texture("img/bg_haikei.png").await.unwrap();
+        let tex_gameover_msg = load_texture("img/gameover_mouhitoiki.png").await.unwrap();
+        let tex_life_ok      = load_texture("img/g_lifemark.png").await.unwrap();
+        let tex_life_ng      = load_texture("img/g_life_batsu.png").await.unwrap();
+        let tex_btn_left     = load_texture("img/btn_left.png").await.unwrap();
+        let tex_btn_right    = load_texture("img/btn_right.png").await.unwrap();
+        let tex_btn_start    = load_texture("img/btn_gamestart.png").await.unwrap();
+        let tex_btn_back     = load_texture("img/btn_back.png").await.unwrap();
 
         // Set nearest filter for crisp sprites
         for t in [&tex_abe, &tex_ohkan, &tex_kokeshi, &tex_megami, &tex_big_kokeshi,
@@ -65,13 +65,13 @@ impl Resources {
         const SE_EXT: &str = "mp3";
         #[cfg(not(target_arch = "wasm32"))]
         const SE_EXT: &str = "wav";
-        let se = |name: &str| format!("assets/se/{name}.{SE_EXT}");
+        let se = |name: &str| format!("se/{name}.{SE_EXT}");
 
         let snd_title     = load_sound(&se("se_setsumei")).await.unwrap();
         let snd_bgm       = load_sound(&se("se_gamebgm")).await.unwrap();
         let snd_catch     = load_sound(&se("se_catch")).await.unwrap();
         // crown_hit has no mp3 source — wav is small (654KB), used on all platforms
-        let snd_crown_hit = load_sound("assets/se/se_crown_hit.wav").await.unwrap();
+        let snd_crown_hit = load_sound("se/se_crown_hit.wav").await.unwrap();
         let snd_damage    = load_sound(&se("se_damage")).await.unwrap();
         let snd_clear     = load_sound(&se("se_gameclear")).await.unwrap();
         let snd_beamgun   = load_sound(&se("se_beamgun")).await.unwrap();
